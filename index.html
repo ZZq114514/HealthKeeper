@@ -4,34 +4,110 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>健康保持者</title>
+    <!-- 公共样式 -->
+    <link rel="stylesheet" href="css/main.css">
     <script src="js/initdatabase.js"></script>
+    <script src="js/main.js"></script>
     <style>
-        /* 你的原有样式保持不变，或者使用之前压缩的样式，这里不再重复，用简短样式代替 */
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family: -apple-system, sans-serif; background: #f5f3f0; padding: 12px; min-height:100vh; display:flex; flex-direction:column; }
-        .container { max-width:420px; margin:0 auto; flex:1; display:flex; flex-direction:column; gap:10px; }
-        .card { background:rgba(255,255,255,0.92); border-radius:16px; padding:14px 16px; box-shadow:0 2px 10px rgba(0,0,0,0.04); }
-        .header-card { display:flex; justify-content:space-between; align-items:center; }
-        .header-card .app-title { font-size:18px; font-weight:600; }
-        .header-card .date-main { font-size:16px; font-weight:500; }
-        .header-card .date-sub { font-size:12px; color:#8e8e93; }
-        .days-card { text-align:center; padding:12px 16px; }
-        .days-card .number { font-size:42px; font-weight:700; }
-        .days-card .number .unit { font-size:18px; font-weight:400; color:#8e8e93; }
-        .days-card .label { font-size:14px; color:#8e8e93; margin-top:2px; }
-        .days-card .sub-info { font-size:12px; color:#aeaeb2; margin-top:4px; }
-        .btn-primary { display:block; width:100%; padding:14px 0; border:none; border-radius:14px; font-size:17px; font-weight:500; background:#1c1c1e; color:#fff; text-align:center; cursor:pointer; }
-        .btn-primary:active { transform:scale(0.97); background:#3a3a3c; }
-        .calc-card .calc-title { font-size:15px; font-weight:500; margin-bottom:8px; }
-        .calc-row { display:flex; align-items:center; gap:10px; }
-        .calc-row label { font-size:14px; color:#3a3a3c; min-width:44px; }
-        .calc-row input { flex:1; padding:8px 12px; border:1px solid #e0dedc; border-radius:10px; font-size:15px; background:#fff; outline:none; }
-        .calc-row .calc-result { font-size:15px; font-weight:500; text-align:right; min-width:100px; }
-        .calc-row .calc-result .highlight { color:#007aff; font-weight:600; }
-        .calc-hint { font-size:12px; color:#aeaeb2; margin-top:6px; }
-        .quote-card { text-align:center; padding:10px 16px; border-top:1px solid rgba(0,0,0,0.04); margin-top:auto; }
-        .quote-card .quote-text { font-size:13px; color:#8e8e93; font-style:italic; }
-        .quote-card .quote-author { font-size:12px; color:#aeaeb2; margin-top:2px; }
+        /* ===== 首页特有样式 ===== */
+        .header-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-card .app-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .header-card .date-main {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        .header-card .date-sub {
+            font-size: 12px;
+            color: #8e8e93;
+        }
+
+        .days-card {
+            text-align: center;
+            padding: 12px 16px;
+        }
+        .days-card .number {
+            font-size: 42px;
+            font-weight: 700;
+        }
+        .days-card .number .unit {
+            font-size: 18px;
+            font-weight: 400;
+            color: #8e8e93;
+        }
+        .days-card .label {
+            font-size: 14px;
+            color: #8e8e93;
+            margin-top: 2px;
+        }
+        .days-card .sub-info {
+            font-size: 12px;
+            color: #aeaeb2;
+            margin-top: 4px;
+        }
+
+        .calc-card .calc-title {
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        .calc-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .calc-row label {
+            font-size: 14px;
+            color: #3a3a3c;
+            min-width: 44px;
+        }
+        .calc-row input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #e0dedc;
+            border-radius: 10px;
+            font-size: 15px;
+            background: #fff;
+            outline: none;
+        }
+        .calc-row .calc-result {
+            font-size: 15px;
+            font-weight: 500;
+            text-align: right;
+            min-width: 100px;
+        }
+        .calc-row .calc-result .highlight {
+            color: #007aff;
+            font-weight: 600;
+        }
+        .calc-hint {
+            font-size: 12px;
+            color: #aeaeb2;
+            margin-top: 6px;
+        }
+
+        .quote-card {
+            text-align: center;
+            padding: 10px 16px;
+            border-top: 1px solid rgba(0, 0, 0, 0.04);
+            margin-top: auto;
+        }
+        .quote-card .quote-text {
+            font-size: 13px;
+            color: #8e8e93;
+            font-style: italic;
+        }
+        .quote-card .quote-author {
+            font-size: 12px;
+            color: #aeaeb2;
+            margin-top: 2px;
+        }
     </style>
 </head>
 <body>
@@ -65,61 +141,38 @@
 </div>
 
 <script>
-    // 名言库
-    var QUOTES = [
-        { text: "身无彩凤双飞翼，心有灵犀一点通。", author: "——李商隐《无题》" },
-        { text: "两情若是长久时，又岂在朝朝暮暮。", author: "——秦观《鹊桥仙》" },
-        { text: "金风玉露一相逢，便胜却人间无数", author: "—— 秦观《鹊桥仙》" },
-        { text: "窈窕淑女，君子好逑", author: "——《诗经·国风·周南》" },
-        { text: "天空无日照，我恋始能停。", author: "——《万叶集》" },
-        { text: "手枕にほそき腕ををさし入れて", author: "——松尾芭蕉" },
-        { text: "愿我如星君如月，夜夜流光相皎洁", author: "—— 范成大《车遥遥篇》" },
-        { text: "结发为夫妻，恩爱两不疑", author: "—— 苏武《留别妻》" }
-    ];
-
-    function getToday() {
-        var d = new Date();
-        return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-    }
-    function formatDateChinese(dateStr) {
-        var parts = dateStr.split('-');
-        var weekdays = ['日','一','二','三','四','五','六'];
-        var d = new Date(parts[0], parts[1]-1, parts[2]);
-        return parts[0]+'年'+parseInt(parts[1])+'月'+parseInt(parts[2])+'日 周'+weekdays[d.getDay()];
-    }
-    function daysBetween(d1, d2) {
-        return Math.floor((new Date(d2) - new Date(d1)) / (1000*60*60*24));
-    }
+    // 使用 main.js 中的 QUOTES、getToday、formatDateChinese、daysBetween
 
     function renderUI() {
         var today = getToday();
         var parts = today.split('-');
-        var weekdays = ['日','一','二','三','四','五','六'];
-        var d = new Date(parts[0], parts[1]-1, parts[2]);
-        document.getElementById('todayDate').textContent = parts[0]+'年'+parseInt(parts[1])+'月'+parseInt(parts[2])+'日';
-        document.getElementById('todayWeekday').textContent = '星期'+weekdays[d.getDay()];
+        var weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+        var d = new Date(parts[0], parts[1] - 1, parts[2]);
+        document.getElementById('todayDate').textContent = parts[0] + '年' + parseInt(parts[1]) + '月' + parseInt(parts[2]) + '日';
+        document.getElementById('todayWeekday').textContent = '星期' + weekdays[d.getDay()];
 
         if (window.DB && typeof window.DB.getLatestRecord === 'function') {
             window.DB.getLatestRecord().then(function(latest) {
                 if (latest) {
-                    var diff = daysBetween(latest.current_date, today);   // ✅ 正确
+                    var diff = daysBetween(latest.current_date, today);
                     document.getElementById('daysSince').textContent = diff;
-                    document.getElementById('lastDateInfo').textContent = '最近一次：'+formatDateChinese(latest.current_date); // ✅ 正确
+                    document.getElementById('lastDateInfo').textContent = '最近一次：' + formatDateChinese(latest.current_date);
                 } else {
                     document.getElementById('daysSince').textContent = '--';
                     document.getElementById('lastDateInfo').textContent = '暂无记录，开始记录你的第一次 ✨';
                 }
             }).catch(function(e) {
-                console.error('getLatestRecord 失败:', e);   // 增加错误日志便于调试
+                console.error('getLatestRecord 失败:', e);
                 document.getElementById('daysSince').textContent = '?';
                 document.getElementById('lastDateInfo').textContent = '加载失败';
-            });} else {
+            });
+        } else {
             document.getElementById('daysSince').textContent = '?';
             document.getElementById('lastDateInfo').textContent = '数据库未就绪';
         }
 
         var idx = Math.floor(Math.random() * QUOTES.length);
-        document.getElementById('quoteText').textContent = '“'+QUOTES[idx].text+'”';
+        document.getElementById('quoteText').textContent = '“' + QUOTES[idx].text + '”';
         document.getElementById('quoteAuthor').textContent = QUOTES[idx].author;
 
         calculateFrequency();
@@ -128,15 +181,17 @@
     function calculateFrequency() {
         var age = parseInt(document.getElementById('ageInput').value);
         var resultEl = document.getElementById('calcResult');
-        if (isNaN(age) || age<20 || age>99) { resultEl.innerHTML='请输入 20~99'; return; }
-        var tens = Math.floor(age/10);
+        if (isNaN(age) || age < 20 || age > 99) {
+            resultEl.innerHTML = '请输入 20~99';
+            return;
+        }
+        var tens = Math.floor(age / 10);
         var product = tens * 9;
-        var cycleDays = product - (product%10);
-        var times = product%10;
-        resultEl.innerHTML = '<span class="highlight">'+cycleDays+'</span> 天内 <span class="highlight">'+times+'</span> 次';
+        var cycleDays = product - (product % 10);
+        var times = product % 10;
+        resultEl.innerHTML = '<span class="highlight">' + cycleDays + '</span> 天内 <span class="highlight">' + times + '</span> 次';
     }
 
-    // 初始化
     async function initApp() {
         if (window.DB && window.DB.initDatabase) {
             try { await window.DB.initDatabase(); } catch(e) {}
