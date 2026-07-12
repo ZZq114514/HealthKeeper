@@ -36,7 +36,7 @@
 	    "duration": 1800,
 	    "use_tool": false,
 	    "with_partner": true,
-	    "method_desc": "紫薇",
+	    "method_desc": "excample",
 	    "use_material": false
 	  },
 	  {
@@ -45,7 +45,7 @@
 	    "duration": 2400,
 	    "use_tool": true,
 	    "with_partner": false,
-	    "method_desc": "口角",
+	    "method_desc": "excample",
 	    "use_material": true
 	  }
 	]
