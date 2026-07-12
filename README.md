@@ -108,6 +108,11 @@ HTML5+CSS+Javascript经典前端三件套来实现
 #### 方案二：本地打包（AndroidStudio+JDK）
 步骤过多，[参见Dcloud官方文档](https://nativesupport.dcloud.net.cn/AppDocs/usesdk/android.html)
 
+#### 其他包
+当然也可以打包为Hommony的HAP包，也可以打包为iOS的安装包
+* 鸿蒙详见[鸿蒙 App 专题](https://uniapp.dcloud.net.cn/tutorial/harmony/runbuild.html)
+* iOS详见[安卓/iOS 专题](https://uniapp.dcloud.net.cn/tutorial/app-base.html)
+
 ## 5.贡献与反馈
 
 这个项目是个人的开源项目欢迎各位提出 Issue 或 Pull Request。
