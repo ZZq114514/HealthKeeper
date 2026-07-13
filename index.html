@@ -4,12 +4,214 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>健康保持者</title>
-    <!-- 公共样式 -->
-    <link rel="stylesheet" href="css/main.css">
     <script src="js/initdatabase.js"></script>
     <script src="js/main.js"></script>
     <style>
-        /* ===== 首页特有样式 ===== */
+        /* =====================================================
+           全局重置 & 公共样式
+           ===================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #f5f3f0;
+            color: #1c1c1e;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 12px 12px 0 12px;
+            height: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+            width: 100%;
+            gap: 10px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: 16px;
+            padding: 14px 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-primary {
+            display: block;
+            width: 100%;
+            padding: 14px 0;
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 500;
+            cursor: pointer;
+            background: #1c1c1e;
+            color: #fff;
+            transition: all 0.15s ease;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(28, 28, 30, 0.15);
+        }
+        .btn-primary:active {
+            transform: scale(0.97);
+            background: #3a3a3c;
+        }
+
+        /* ---------- 模态框 ---------- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            padding: 20px;
+        }
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-box {
+            background: #ffffff;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 100%;
+            padding: 24px 20px 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            animation: modalIn 0.25s ease;
+        }
+        @keyframes modalIn {
+            from {
+                transform: scale(0.95);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-box h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .modal-field {
+            margin-bottom: 14px;
+        }
+        .modal-field label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #3a3a3c;
+            margin-bottom: 4px;
+        }
+        .modal-field input[type="text"],
+        .modal-field input[type="number"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #e0dedc;
+            border-radius: 12px;
+            font-size: 15px;
+            background: #faf9f8;
+            outline: none;
+        }
+        .modal-field input:focus {
+            border-color: #1c1c1e;
+            background: #fff;
+        }
+        .modal-field input[readonly] {
+            background: #f0eeec;
+            color: #6e6e73;
+        }
+        .modal-field .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 2px;
+        }
+        .modal-field .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #1c1c1e;
+            cursor: pointer;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .modal-buttons button {
+            flex: 1;
+            padding: 12px 0;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .modal-buttons .btn-cancel {
+            background: #f0eeec;
+            color: #3a3a3c;
+        }
+        .modal-buttons .btn-cancel:active {
+            background: #e0dedc;
+        }
+        .modal-buttons .btn-confirm {
+            background: #1c1c1e;
+            color: #fff;
+        }
+        .modal-buttons .btn-confirm:active {
+            background: #3a3a3c;
+        }
+        .modal-buttons .btn-danger {
+            background: #ff3b30;
+            color: #fff;
+        }
+        .modal-buttons .btn-danger:active {
+            background: #cc2d24;
+        }
+
+        .empty-tip {
+            text-align: center;
+            color: #8e8e93;
+            font-size: 15px;
+            padding: 40px 0;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* =====================================================
+           首页特有样式
+           ===================================================== */
         .header-card {
             display: flex;
             justify-content: space-between;
@@ -52,6 +254,94 @@
             margin-top: 4px;
         }
 
+        /* ---- 计划定制卡片 ---- */
+        .plan-card {
+            padding: 14px 16px;
+        }
+        .plan-card .plan-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: #1c1c1e;
+            margin-bottom: 8px;
+        }
+        .plan-card .plan-current {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f8f7f5;
+            border-radius: 12px;
+            padding: 10px 14px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .plan-card .plan-current:active {
+            background: #eeedeb;
+        }
+        .plan-card .plan-current .plan-target {
+            font-size: 16px;
+            font-weight: 500;
+            color: #1c1c1e;
+        }
+        .plan-card .plan-current .plan-target .empty {
+            color: #aeaeb2;
+            font-weight: 400;
+        }
+        .plan-card .plan-current .plan-edit-hint {
+            font-size: 13px;
+            color: #8e8e93;
+        }
+        .plan-card .plan-status {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 4px 4px 4px;
+            border-top: 1px solid rgba(0, 0, 0, 0.04);
+        }
+        .plan-card .plan-status .status-label {
+            font-size: 14px;
+            color: #3a3a3c;
+        }
+        .plan-card .plan-status .status-value {
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .plan-card .plan-status .status-value.within-limit {
+            color: #34c759;
+        }
+        .plan-card .plan-status .status-value.exceed-limit {
+            color: #ff9500;
+        }
+        .plan-card .plan-status .status-value.no-target {
+            color: #aeaeb2;
+            font-weight: 400;
+        }
+
+        /* ---- 计划弹窗 ---- */
+        .plan-modal .modal-box {
+            max-width: 340px;
+        }
+        .plan-modal .modal-field .hint {
+            font-size: 12px;
+            color: #aeaeb2;
+            margin-top: 2px;
+        }
+        .plan-modal .modal-field .range-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .plan-modal .modal-field .range-row input {
+            width: 80px;
+            flex: none;
+            text-align: center;
+        }
+        .plan-modal .modal-field .range-row span {
+            color: #3a3a3c;
+            font-size: 15px;
+        }
+
+        /* ---- 计算器 ---- */
         .calc-card .calc-title {
             font-size: 15px;
             font-weight: 500;
@@ -92,6 +382,7 @@
             margin-top: 6px;
         }
 
+        /* ---- 名言 ---- */
         .quote-card {
             text-align: center;
             padding: 10px 16px;
@@ -108,10 +399,24 @@
             color: #aeaeb2;
             margin-top: 2px;
         }
+
+        /* ---- 响应式 ---- */
+        @media (max-width: 400px) {
+            .container {
+                padding: 8px 8px 0 8px;
+            }
+            .modal-box {
+                padding: 20px 16px;
+            }
+            .plan-modal .modal-field .range-row input {
+                width: 60px;
+            }
+        }
     </style>
 </head>
 <body>
 <div class="container">
+    <!-- 标题 + 日期 -->
     <div class="card header-card">
         <div class="app-title">健康保持者 <span style="font-size:14px;color:#8e8e93;font-weight:400;">· 私密</span></div>
         <div class="date-box">
@@ -119,12 +424,33 @@
             <div class="date-sub" id="todayWeekday">----</div>
         </div>
     </div>
+
+    <!-- 距离天数 -->
     <div class="card days-card">
         <div class="number"><span id="daysSince">--</span><span class="unit">天</span></div>
         <div class="label">距离最近一次涩涩</div>
         <div class="sub-info" id="lastDateInfo">暂无记录</div>
     </div>
+
+    <!-- 计划定制卡片 -->
+    <div class="card plan-card">
+        <div class="plan-title">控制计划</div>
+        <div class="plan-current" id="planTargetDisplay">
+            <span class="plan-target" id="planTargetText">
+                <span class="empty">点击设置上限</span>
+            </span>
+            <span class="plan-edit-hint">点击修改</span>
+        </div>
+        <div class="plan-status">
+            <span class="status-label">当前执行</span>
+            <span class="status-value" id="planStatusValue">—</span>
+        </div>
+    </div>
+
+    <!-- 主按钮 -->
     <button class="btn-primary" id="goToRecordBtn">添加 / 查看记录</button>
+
+    <!-- 计算器 -->
     <div class="card calc-card">
         <div class="calc-title">周期计算器 (⚠ 仅供参考)</div>
         <div class="calc-row">
@@ -134,15 +460,247 @@
         </div>
         <div class="calc-hint">💡 公式：年龄十位数 × 9，积的十位数为周期(天)，个位数为建议次数。30岁 → 20天7次</div>
     </div>
+
+    <!-- 名言 -->
     <div class="card quote-card">
-        <div class="quote-text" id="quoteText">“性爱是生命赋予我们的最美好的礼物之一。”</div>
-        <div class="quote-author" id="quoteAuthor">—— 佚名</div>
+        <div class="quote-text" id="quoteText"></div>
+        <div class="quote-author" id="quoteAuthor"></div>
+    </div>
+</div>
+
+<!-- 计划设置弹窗 -->
+<div class="modal-overlay plan-modal" id="planModal">
+    <div class="modal-box">
+        <h3>设定控制上限</h3>
+        <div class="modal-field">
+            <label>每 <span id="planCycleLabel">7</span> 天内不超过 <span id="planCountLabel">3</span> 次</label>
+            <div class="range-row">
+                <input type="number" id="planCycleInput" min="1" max="90" value="7">
+                <span>天内</span>
+                <input type="number" id="planCountInput" min="1" max="30" value="3">
+                <span>次（上限）</span>
+            </div>
+            <div class="hint">💡 设定一个适合你自身节奏的控制上限，帮助健康管理</div>
+        </div>
+        <div class="modal-buttons">
+            <button class="btn-danger" id="planClearBtn">清除上限</button>
+            <button class="btn-cancel" id="planCancelBtn">取消</button>
+            <button class="btn-confirm" id="planConfirmBtn">保存</button>
+        </div>
     </div>
 </div>
 
 <script>
-    // 使用 main.js 中的 QUOTES、getToday、formatDateChinese、daysBetween
+    // =====================================================
+    //  内联后备
+    // =====================================================
+    if (typeof getToday === 'undefined') {
+        window.getToday = function() {
+            var d = new Date();
+            return d.getFullYear() + '-' +
+                String(d.getMonth() + 1).padStart(2, '0') + '-' +
+                String(d.getDate()).padStart(2, '0');
+        };
+        window.formatDateChinese = function(dateStr) {
+            var parts = dateStr.split('-');
+            var weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+            var d = new Date(parts[0], parts[1] - 1, parts[2]);
+            return parts[0] + '年' + parseInt(parts[1]) + '月' + parseInt(parts[2]) + '日 周' + weekdays[d.getDay()];
+        };
+        window.daysBetween = function(d1, d2) {
+            return Math.floor((new Date(d2) - new Date(d1)) / (1000 * 60 * 60 * 24));
+        };
+        window.QUOTES = [
+            { text: "身无彩凤双飞翼，心有灵犀一点通。", author: "——李商隐《无题》" },
+            { text: "两情若是长久时，又岂在朝朝暮暮。", author: "——秦观《鹊桥仙》" },
+            { text: "金风玉露一相逢，便胜却人间无数", author: "—— 秦观《鹊桥仙》" },
+            { text: "窈窕淑女，君子好逑", author: "——《诗经·国风·周南》" },
+            { text: "天空无日照，我恋始能停。", author: "——《万叶集》" },
+            { text: "手枕にほそき腕ををさし入れて", author: "——松尾芭蕉" },
+            { text: "愿我如星君如月，夜夜流光相皎洁", author: "—— 范成大《车遥遥篇》" },
+            { text: "结发为夫妻，恩爱两不疑", author: "—— 苏武《留别妻》" }
+        ];
+    }
 
+    // =====================================================
+    //  计划定制模块（控制型）
+    // =====================================================
+    (function() {
+        var PLAN_STORAGE_KEY = 'intimate_plan';
+
+        function formatDate(date) {
+            return date.getFullYear() + '-' +
+                String(date.getMonth() + 1).padStart(2, '0') + '-' +
+                String(date.getDate()).padStart(2, '0');
+        }
+
+        function loadPlan() {
+            try {
+                if (typeof plus === 'undefined') return null;
+                var raw = plus.storage.getItem(PLAN_STORAGE_KEY);
+                if (raw) {
+                    var data = JSON.parse(raw);
+                    if (data && typeof data.cycle === 'number' && typeof data.count === 'number') {
+                        return data;
+                    }
+                }
+                return null;
+            } catch (e) {
+                console.warn('读取计划失败:', e);
+                return null;
+            }
+        }
+
+        function savePlan(cycle, count) {
+            try {
+                if (typeof plus === 'undefined') return false;
+                plus.storage.setItem(PLAN_STORAGE_KEY, JSON.stringify({ cycle: cycle, count: count }));
+                return true;
+            } catch (e) {
+                console.error('保存计划失败:', e);
+                return false;
+            }
+        }
+
+        function clearPlan() {
+            try {
+                if (typeof plus === 'undefined') return false;
+                plus.storage.removeItem(PLAN_STORAGE_KEY);
+                return true;
+            } catch (e) {
+                console.error('清除计划失败:', e);
+                return false;
+            }
+        }
+
+        async function calculateActual(cycle, count) {
+            var today = window.getToday();
+            var startDate = new Date();
+            startDate.setDate(startDate.getDate() - cycle + 1);
+            var fmt = (typeof window.DB !== 'undefined' && typeof window.DB.formatDate === 'function') ?
+                window.DB.formatDate :
+                formatDate;
+            var startStr = fmt(startDate);
+
+            try {
+                var records = await window.DB.getAllRecords();
+                var inRange = records.filter(function(r) {
+                    return r.current_date >= startStr && r.current_date <= today;
+                });
+                var actualCount = inRange.length;
+                var exceed = actualCount > count;
+                return { actualCount: actualCount, exceed: exceed, limit: count, cycle: cycle };
+            } catch (e) {
+                console.error('计算执行情况失败:', e);
+                return { actualCount: 0, exceed: false, limit: count, cycle: cycle, error: true };
+            }
+        }
+
+        async function renderPlan() {
+            var plan = loadPlan();
+            var targetTextEl = document.getElementById('planTargetText');
+            var statusValueEl = document.getElementById('planStatusValue');
+
+            if (!plan) {
+                targetTextEl.innerHTML = '<span class="empty">点击设置上限</span>';
+                statusValueEl.textContent = '未设定上限';
+                statusValueEl.className = 'status-value no-target';
+                return;
+            }
+
+            targetTextEl.textContent = '每 ' + plan.cycle + ' 天 ≤ ' + plan.count + ' 次';
+
+            var result = await calculateActual(plan.cycle, plan.count);
+            if (result.error) {
+                statusValueEl.textContent = '计算失败';
+                statusValueEl.className = 'status-value no-target';
+                return;
+            }
+
+            document.getElementById('planCycleLabel').textContent = plan.cycle;
+            document.getElementById('planCountLabel').textContent = plan.count;
+
+            if (result.exceed) {
+                var over = result.actualCount - result.limit;
+                statusValueEl.textContent = '已超过上限 ' + over + ' 次';
+                statusValueEl.className = 'status-value exceed-limit';
+            } else {
+                statusValueEl.textContent = '未超过上限（' + result.actualCount + '/' + result.limit + '）';
+                statusValueEl.className = 'status-value within-limit';
+            }
+        }
+
+        function openPlanModal() {
+            var plan = loadPlan();
+            if (plan) {
+                document.getElementById('planCycleInput').value = plan.cycle;
+                document.getElementById('planCountInput').value = plan.count;
+                document.getElementById('planCycleLabel').textContent = plan.cycle;
+                document.getElementById('planCountLabel').textContent = plan.count;
+            } else {
+                document.getElementById('planCycleInput').value = 7;
+                document.getElementById('planCountInput').value = 3;
+                document.getElementById('planCycleLabel').textContent = 7;
+                document.getElementById('planCountLabel').textContent = 3;
+            }
+            document.getElementById('planModal').classList.add('show');
+        }
+
+        function closePlanModal() {
+            document.getElementById('planModal').classList.remove('show');
+        }
+
+        function bindPlanEvents() {
+            var cycleInput = document.getElementById('planCycleInput');
+            var countInput = document.getElementById('planCountInput');
+
+            cycleInput.addEventListener('input', function() {
+                document.getElementById('planCycleLabel').textContent = this.value || 1;
+            });
+            countInput.addEventListener('input', function() {
+                document.getElementById('planCountLabel').textContent = this.value || 1;
+            });
+
+            document.getElementById('planConfirmBtn').addEventListener('click', function() {
+                var cycle = parseInt(cycleInput.value) || 7;
+                var count = parseInt(countInput.value) || 3;
+                if (cycle < 1) cycle = 1;
+                if (count < 1) count = 1;
+                savePlan(cycle, count);
+                closePlanModal();
+                renderPlan();
+                if (typeof plus !== 'undefined') {
+                    plus.ui.toast('✅ 上限已更新');
+                }
+            });
+
+            document.getElementById('planClearBtn').addEventListener('click', function() {
+                if (confirm('确定要清除当前上限吗？')) {
+                    clearPlan();
+                    closePlanModal();
+                    renderPlan();
+                    if (typeof plus !== 'undefined') {
+                        plus.ui.toast('已清除上限');
+                    }
+                }
+            });
+
+            document.getElementById('planCancelBtn').addEventListener('click', closePlanModal);
+
+            document.getElementById('planModal').addEventListener('click', function(e) {
+                if (e.target === this) closePlanModal();
+            });
+
+            document.getElementById('planTargetDisplay').addEventListener('click', openPlanModal);
+        }
+
+        window.renderPlan = renderPlan;
+        window.bindPlanEvents = bindPlanEvents;
+    })();
+
+    // =====================================================
+    //  原有功能
+    // =====================================================
     function renderUI() {
         var today = getToday();
         var parts = today.split('-');
@@ -176,6 +734,10 @@
         document.getElementById('quoteAuthor').textContent = QUOTES[idx].author;
 
         calculateFrequency();
+
+        if (typeof window.renderPlan === 'function') {
+            window.renderPlan();
+        }
     }
 
     function calculateFrequency() {
@@ -197,6 +759,9 @@
             try { await window.DB.initDatabase(); } catch(e) {}
         }
         renderUI();
+        if (typeof window.bindPlanEvents === 'function') {
+            window.bindPlanEvents();
+        }
         document.getElementById('goToRecordBtn').addEventListener('click', function() {
             location.href = 'records.html';
         });
