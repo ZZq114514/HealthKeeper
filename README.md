@@ -125,7 +125,9 @@ HTML5+CSS+Javascript经典前端三件套来实现
 * 30岁 → 3 × 9 = 27 → 20 天内 7 次
 * 40岁 → 4 × 9 = 36 → 30 天内 6 次
 
+## 更多信息
 
+关于initdatabase.js和main.js的技术细节可以[点击此处](https://fcndr4t25l64.feishu.cn/wiki/IbtJwi4yBiNDVjkhGc5c9uR5n3e?from=from_copylink)
 
 ## 许可证
 本项目使用 [MIT License](https://mit-license.org/) 开源协议。
