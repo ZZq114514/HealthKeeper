@@ -11,7 +11,7 @@
 	│   └── initdatabase.js     # 数据存储模块 (plus.storage)
 	│   └── main.js				# 复用逻辑
 	│
-	├── LICENSE		开源协议
+	├── LICENSE		# 开源协议
 	│
 	├── README.md	# 说明文档
 	│
