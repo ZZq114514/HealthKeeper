@@ -10,8 +10,10 @@
 	├── js/
 	│   └── initdatabase.js     # 数据存储模块 (plus.storage)
 	│   └── main.js				# 复用逻辑
-	├──css/
-	│   └── main.css     # 复用样式表
+	│
+	├── LICENSE		开源协议
+	│
+	├── README.md	# 说明文档
 	│
 	└── manifest.json           # 应用配置文件
 
